@@ -9,3 +9,13 @@ Prerequisites:
     docker
     kind
     python
+
+Setting Up Developer Environment
+
+    Create Cluster:
+    kind create cluster --config configs/cluster/kind.yaml
+
+    Verify Labels:
+    kubectl get nodes --show-labels
+
+
