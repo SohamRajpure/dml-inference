@@ -27,7 +27,7 @@ class NodeManager:
         print(f"Applied labels {labels} to node {node_name}")
 
     #Marks a node as unschedulable to prevent new workloads from being scheduled.
-    def cordon_node(self):
+    def cordon_node(self, node_name):
         body = {
             "spec": {
                 "unschedulable": False
