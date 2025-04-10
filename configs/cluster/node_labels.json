@@ -1,0 +1,18 @@
+{
+    "base_labels": {
+      "research-project": "inference-cluster",
+      "experiment-batch": "ft-2025q2",
+      "ml-framework": "pytorch-2.2"
+    },
+    "failure_domains": {
+      "availability-zone": ["az1", "az2", "az3"],
+      "failure-scenario": ["network-partition", "cpu-exhaustion", "oom"]
+    },
+    "resource_profiles": {
+      "inference-tier": {
+        "primary": "high-mem",
+        "backup": "low-latency"
+      }
+    }
+  }
+  
