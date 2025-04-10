@@ -1,8 +1,8 @@
-# Install dependancies
-sudo apt install python3-pytest python3-pytest-cov
+# Activiate Virtual Env
 
-# Run all tests
-pytest tests/ --cov=src.cluster --cov-report=term-missing
+source venv/bin/activate
+
 
 # Run specific test file
-pytest tests/cluster/<specific_test_file> -v
+
+python3 -m tests.cluster.<test_file>
