@@ -1,0 +1,50 @@
+# Use a lightweight Python base image
+# To build this image:
+#   1. From project root directory run:
+#      docker build -t inference-service:latest -f src/cluster/docker/Dockerfile.inference .
+#   2. To run locally:
+#      docker run -p 8080:8080 inference-service:latest
+#   3. For Kubernetes deployment:
+#      - Update container_image in NodeManager.deploy_model() with inference-service:latest
+#      - The image should be accessible to your K8s cluster (push to registry if needed)
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Create non-root user with home directory
+RUN useradd -m -u 1001 appuser && \
+    chown -R appuser:appuser /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip first
+RUN pip install --no-cache-dir --upgrade pip
+
+# Copy requirements file
+COPY --chown=appuser:appuser requirements.txt .
+
+# Install Python dependencies as user
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code with proper ownership
+COPY --chown=appuser:appuser . .
+
+# Switch to non-root user
+USER appuser
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    HOME=/home/appuser \
+    PATH=/home/appuser/.local/bin:$PATH
+
+# Expose port for inference service
+EXPOSE 8080
+
+# Command to run the inference service
+CMD ["python", "-m", "src.inference.service"]
