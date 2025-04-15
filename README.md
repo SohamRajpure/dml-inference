@@ -77,8 +77,3 @@ For instructions on how to clean up the deployment, refer to the [Cleanup sectio
 
 Feel free to submit issues and enhancement requests.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
